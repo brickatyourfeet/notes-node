@@ -1,0 +1,25 @@
+{
+  "name": "notes-node",
+  "version": "1.0.0",
+  "description": "notes",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brickatyourfeet/notes-node.git"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Kyle Braden",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brickatyourfeet/notes-node/issues"
+  },
+  "homepage": "https://github.com/brickatyourfeet/notes-node#readme",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
+}
