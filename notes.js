@@ -1,7 +1,34 @@
-console.log('starting notes.js')
+const fs = require('fs')
+
+var fetchNotes = () => {
+  try {
+    //without try catch it will crash if user doesn't have notes-data file
+    //with try catch if they do not, it will create the file for them
+    var notesString = fs.readFileSync('notes-data.json')
+    return JSON.parse(notesString)
+  } catch (e) {
+    return []
+  }
+}
+
+var saveNotes = (notes) => {
+  fs.writeFileSync('notes-data.json', JSON.stringify(notes))
+}
 
 var addNote = (title, body) => {
-  console.log('adding note', title, body)
+  var notes = fetchNotes()
+  var note = {
+    title,
+    body
+  }
+
+  var duplicateNotes = notes.filter((note) => note.title === title)
+
+  if (duplicateNotes.length === 0) {
+    notes.push(note)
+    saveNotes(notes)
+    return note
+  }
 }
 
 var getAll = () => {
@@ -13,7 +40,11 @@ var getNote = (title) => {
 }
 
 var removeNote = (title) => {
-  console.log('removing: ' + title + '- that note is gone. ')
+  var notes = fetchNotes()
+  var filteredNotes = notes.filter((note) => note.title !== title)
+  saveNotes(filteredNotes)
+
+  return notes.length !== filteredNotes.length
 }
 
 module.exports = {
