@@ -1,25 +1,34 @@
 console.log('sanity check: starting app.js')
 
 const fs = require('fs')
-const os = require('os')
 const _ = require('lodash')
+const yargs = require('yargs')
+
 const notes = require('./notes.js')
 
-console.log(_.isString(true))
-console.log(_.isString('string and things'))
+//yargs makes it easier to deal with arguments
+//parsing with process.argv is terrible, so we use yargs
+const argv = yargs.argv
+console.log('Process', process.argv)
+console.log('Yargs', argv)
+//this process.argv takes the third process argument, which allows you to
+//add commands from command line after typing node and the filename
+//var command = process.argv[2]
+var command = argv._[0] //has same functionality as line above 
+//to visualize:
+console.log(command + 'what the fuck')
+console.log('Command: ', command)
 
-//.uniq in lodash removes duplicates of an array
-var filteredArray = _.uniq(['Name', 'Name', 3, 3, 4, 5, 6])
-console.log(filteredArray)
 
 
-
-//console.log('Result: ', notes.add(4, 4))
-
-//var user = os.userInfo()
-//console.log(user)
-
-//fs.appendFileSync('greetings.txt', 'using node file system test')
-//fs.appendFileSync('greetings.txt', 'Hello ' + user.username + '!')
-//same thing but with template strings
-//fs.appendFileSync('greetings.txt', `Hello ${user.username}! You are ${notes.age}`)
+if (command === 'add') {
+  notes.addNote(argv.title, argv.body)
+} else if (command === 'list') {
+  notes.getAll()
+} else if (command === 'read') {
+  notes.getNote(argv.title)
+} else if (command === 'remove') {
+  notes.removeNote(argv.title)
+} else {
+  console.log('Command not recognized')
+}
